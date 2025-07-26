@@ -1,83 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | New Me Project</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | New Me Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    function validateForm(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const service = document.getElementById('service').value;
+      const message = document.getElementById('message').value.trim();
+      let valid = true;
+      let errorMsg = '';
+      if (!name) { valid = false; errorMsg += 'Name is required. '; }
+      if (!email || !/^\S+@\S+\.\S+$/.test(email)) { valid = false; errorMsg += 'Valid email is required. '; }
+      if (!phone || !/^\+?\d{7,15}$/.test(phone.replace(/\s+/g, ''))) { valid = false; errorMsg += 'Valid phone number is required. '; }
+      if (!service) { valid = false; errorMsg += 'Please select a service. '; }
+      if (!message) { valid = false; errorMsg += 'Message is required.'; }
+      const errorDiv = document.getElementById('form-error');
+      const successDiv = document.getElementById('form-success');
+      if (!valid) {
+        errorDiv.textContent = errorMsg;
+        errorDiv.classList.remove('hidden');
+        successDiv.classList.add('hidden');
+        return false;
+      } else {
+        errorDiv.classList.add('hidden');
+        successDiv.classList.remove('hidden');
+        document.getElementById('contact-form').reset();
+        return false;
+      }
+    }
+  </script>
 </head>
 <body class="bg-gray-50 text-gray-900 font-sans">
-    <!-- Navigation -->
-    <nav class="bg-white shadow mb-8 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <span class="text-2xl font-bold text-blue-700">New Me Project</span>
-            <div class="space-x-6">
-                <a href="index.html" class="text-gray-700 hover:text-blue-600">Home</a>
-                <a href="about.html" class="text-gray-700 hover:text-blue-600">About</a>
-                <a href="services.html" class="text-gray-700 hover:text-blue-600">Services</a>
-                <a href="portfolio.html" class="text-gray-700 hover:text-blue-600">Portfolio</a>
-                <a href="blog.html" class="text-gray-700 hover:text-blue-600">Blog</a>
-            </div>
-        </div>
-    </nav>
+  <!-- Navigation -->
+  <nav class="bg-white shadow mb-8">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <span class="text-2xl font-bold text-blue-700">New Me Project</span>
+      <div class="space-x-6">
+        <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+        <a href="about.html" class="text-gray-700 hover:text-blue-600 font-medium">About</a>
+        <a href="services.html" class="text-gray-700 hover:text-blue-600 font-medium">Services</a>
+        <a href="contact.html" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+      </div>
+    </div>
+  </nav>
 
-    <!-- Contact Section -->
-    <section id="contact" class="max-w-2xl mx-auto py-12 px-4">
-        <h2 class="text-3xl font-bold text-blue-700 mb-6 text-center">Contact Me</h2>
-        <form id="contact-form" class="bg-white rounded-lg shadow p-8 space-y-6" onsubmit="validateForm(event)">
-            <div id="form-error" class="text-red-600 text-sm mb-2 hidden"></div>
-            <div id="form-success" class="text-green-600 text-sm mb-2 hidden">Thank you! Your message has been sent.</div>
-            <div>
-                <label for="name" class="block font-medium mb-1">Name<span class="text-red-500">*</span></label>
-                <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
-            <div>
-                <label for="email" class="block font-medium mb-1">Email<span class="text-red-500">*</span></label>
-                <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
-            <div>
-                <label for="phone" class="block font-medium mb-1">Phone Number<span class="text-red-500">*</span></label>
-                <input type="tel" id="phone" name="phone" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            </div>
-            <div>
-                <label for="service" class="block font-medium mb-1">Service Needed<span class="text-red-500">*</span></label>
-                <select id="service" name="service" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                    <option value="">Select a service</option>
-                    <option>Operating System Installation & Repair</option>
-                    <option>Driver & Software Updates</option>
-                    <option>Hardware Diagnosis & Support</option>
-                    <option>Performance Optimization</option>
-                </select>
-            </div>
-            <div>
-                <label for="message" class="block font-medium mb-1">Message<span class="text-red-500">*</span></label>
-                <textarea id="message" name="message" rows="4" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
-            </div>
-            <button type="submit" class="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Send Message</button>
-        </form>
-        <div class="mt-8 text-center text-gray-600">
-            <p>Email: <a href="mailto:jamalik.sadiki999@gmail.com" class="text-blue-600 hover:underline">jamalik.sadiki999@gmail.com</a></p>
-            <p>Location: Unguja, Zanzibar</p>
-            <p>Phone: <a href="tel:+255682527180" class="text-blue-600 hover:underline">+255682527180</a>, <a href="tel:+255615837180" class="text-blue-600 hover:underline">+255615837180</a></p>
-            <p>WhatsApp: <a href="https://wa.me/255682527180" class="text-blue-600 hover:underline">255682527180</a></p>
-        </div>
-    </section>
+  <!-- Contact Section -->
+  <section class="max-w-2xl mx-auto py-12 px-4">
+    <h1 class="text-3xl font-bold text-blue-700 mb-6 text-center">Contact Me</h1>
+    <form id="contact-form" class="bg-white rounded-lg shadow p-8 space-y-6" action="https://formspree.io/f/mnqewqzv" method="POST">
+      <div id="form-error" class="text-red-600 text-sm mb-2 hidden"></div>
+      <div id="form-success" class="text-green-600 text-sm mb-2 hidden">Thank you! Your message has been sent.</div>
+      <div>
+        <label for="name" class="block font-medium mb-1">Name<span class="text-red-500">*</span></label>
+        <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div>
+        <label for="email" class="block font-medium mb-1">Email<span class="text-red-500">*</span></label>
+        <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div>
+        <label for="phone" class="block font-medium mb-1">Phone Number<span class="text-red-500">*</span></label>
+        <input type="tel" id="phone" name="phone" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      </div>
+      <div>
+        <label for="service" class="block font-medium mb-1">Service Needed<span class="text-red-500">*</span></label>
+        <select id="service" name="service" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          <option value="">Select a service</option>
+          <option>Operating System Installation & Repair</option>
+          <option>Driver & Software Updates</option>
+          <option>Hardware Diagnosis & Support</option>
+          <option>Performance Optimization</option>
+        </select>
+      </div>
+      <div>
+        <label for="message" class="block font-medium mb-1">Message<span class="text-red-500">*</span></label>
+        <textarea id="message" name="message" rows="4" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+      </div>
+      <button type="submit" class="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Send Message</button>
+      <p class="text-xs text-gray-400 mt-2">Your information is kept private and only used to respond to your inquiry.</p>
+    </form>
+    <div class="mt-8 text-center text-gray-600">
+      <p>Email: <a href="mailto:jamalik.sadiki999@gmail.com" class="text-blue-600 hover:underline">jamalik.sadiki999@gmail.com</a></p>
+      <p>Phone: <a href="tel:+255682527180" class="text-blue-600 hover:underline">+255682527180</a>, <a href="tel:+255615837180" class="text-blue-600 hover:underline">+255615837180</a></p>
+      <p>WhatsApp: <a href="https://wa.me/255682527180" class="text-blue-600 hover:underline">255682527180</a></p>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t mt-16 py-6">
-        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-gray-600">
-            <div class="mb-4 md:mb-0">&copy; 2024 New Me Project. All rights reserved.</div>
-            <div class="flex space-x-4">
-                <a href="mailto:jamalik.sadiki999@gmail.com" class="hover:text-blue-600">Email</a>
-                <a href="https://wa.me/255682527180" class="hover:text-blue-600">WhatsApp</a>
-                <a href="https://instagram.com/mr.programmerTZ" class="hover:text-blue-600">Instagram</a>
-                <a href="https://tiktok.com/@mr.programmertz" class="hover:text-blue-600">TikTok</a>
-                <a href="https://twitter.com/mr.programmertz" class="hover:text-blue-600">X</a>
-                <a href="https://facebook.com/sadickjamali" class="hover:text-blue-600">Facebook</a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/js/main.js"></script>
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-16 py-6">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-gray-600">
+      <div class="mb-4 md:mb-0">&copy; 2024 New Me Project. All rights reserved.</div>
+      <div class="flex space-x-4">
+        <a href="mailto:jamalik.sadiki999@gmail.com" class="hover:text-blue-600">Email</a>
+        <a href="https://wa.me/255682527180" class="hover:text-blue-600">WhatsApp</a>
+        <a href="https://instagram.com/mr.programmerTZ" class="hover:text-blue-600">Instagram</a>
+        <a href="https://tiktok.com/@mr.programmertz" class="hover:text-blue-600">TikTok</a>
+        <a href="https://twitter.com/mr.programmertz" class="hover:text-blue-600">X</a>
+        <a href="https://facebook.com/sadickjamali" class="hover:text-blue-600">Facebook</a>
+      </div>
+    </div>
+  </footer>
 </body>
-</html>
+</html> 
